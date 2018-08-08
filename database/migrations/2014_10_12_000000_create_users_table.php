@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('account', 30)->unique()->index()->comment('帳號');
             $table->string('name', 30)->comment('姓名');
             $table->string('email')->unique()->comment('信箱');
+            $table->unsignedInteger('department_id')->comment('使用者角色(1:管理部/2:專案部/3:研究部/4:編輯部/5:設計部/6:工程部/7:其他)');
             $table->string('language', 10)->default('zh_TW')->comment('語系');
             $table->string('password')->comment('密碼');
             $table->boolean('status')->default(1)->comment('狀態(0:停用/1:啟用)');

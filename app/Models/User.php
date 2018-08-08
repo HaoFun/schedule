@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'account', 'name', 'email', 'language', 'password',
+        'account', 'name', 'email', 'department_id', 'language', 'password',
         'status', 'api_token', 'password_changed_at'
     ];
 
@@ -27,4 +27,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'api_token'
     ];
+
+    public function department()
+    {
+        return $this->hasOne(Department::class, 'department_id');
+    }
+
+    public function issues()
+    {
+        return $this->belongsToMany(Issue::class, 'issues_users')->withTimestamps();
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'projects_users')->withTimestamps();
+    }
 }
