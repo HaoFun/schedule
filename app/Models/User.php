@@ -30,16 +30,19 @@ class User extends Authenticatable
 
     public function department()
     {
-        return $this->belongsTo(Department::class, 'department_id')->select('department_name');
+        return $this->belongsTo(Department::class, 'department_id')
+            ->select('department_name');
     }
 
     public function issues()
     {
-        return $this->belongsToMany(Issue::class, 'issue_user')->withTimestamps();
+        return $this->belongsToMany(Issue::class, 'issue_user')
+            ->withTimestamps();
     }
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_user')->withTimestamps();
+        return $this->belongsToMany(Project::class, 'project_user')
+            ->withTimestamps();
     }
 }

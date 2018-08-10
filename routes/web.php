@@ -14,7 +14,3 @@
 Route::get('/', function () {
     return \App\Models\User::with('projects.contents.created_by_user')->find(1)->projects;
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

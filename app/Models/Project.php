@@ -23,12 +23,14 @@ class Project extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'project_user')->withTimestamps();
+        return $this->belongsToMany(User::class, 'project_user')
+            ->withTimestamps();
     }
 
     public function tracker()
     {
-        return $this->belongsToMany(Tracker::class, 'issue_tracker')->withTimestamps();
+        return $this->belongsToMany(Tracker::class, 'issue_tracker')
+            ->withTimestamps();
     }
 
     public function files()
@@ -43,11 +45,13 @@ class Project extends Model
 
     public function created_by_user()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by')
+            ->select('account');
     }
 
     public function updated_by_user()
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by')
+            ->select('account');
     }
 }

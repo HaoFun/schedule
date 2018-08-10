@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     protected $fillable = [
-        'contentable_id', 'contentable_type', 'content_body', 'remark', 'created_by',
-        'updated_by'
+        'contentable_id', 'contentable_type', 'content_body', 'remark',
+        'created_by', 'updated_by'
     ];
 
     public function contentable()
@@ -23,11 +23,13 @@ class Content extends Model
 
     public function created_by_user()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by')
+            ->select('account');
     }
 
     public function updated_by_user()
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by')
+            ->select('account');
     }
 }
