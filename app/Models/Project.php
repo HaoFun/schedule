@@ -12,6 +12,15 @@ class Project extends Model
         'updated_by'
     ];
 
+    const PriorityList = [
+        1 => '高', 2 => '正常', 3 => '低'
+    ];
+
+    public function getPriorityAttribute($value)
+    {
+        return self::PriorityList[$value];
+    }
+
     public function user()
     {
         return $this->belongsToMany(User::class, 'project_user')->withTimestamps();

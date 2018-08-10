@@ -12,11 +12,7 @@
 */
 
 Route::get('/', function () {
-    return \App\Models\User::find(1)->projects[1]->contents()->create([
-        'content_body' => 'Test_Create',
-        'created_by' => 1,
-        'updated_by' => 1
-    ]);
+    return \App\Models\User::with('projects.contents.created_by_user')->find(1)->projects;
 });
 
 Auth::routes();
