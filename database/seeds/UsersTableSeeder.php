@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
-class UsersSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     public function run()
     {

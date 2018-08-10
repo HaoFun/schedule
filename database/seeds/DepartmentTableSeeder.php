@@ -3,13 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\Models\Department;
 
-class DepartmentSeeder extends Seeder
+class DepartmentTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $time_now = now();
