@@ -10,7 +10,3 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return \App\Models\User::with('projects.contents.created_by_user')->find(1)->projects;
-});

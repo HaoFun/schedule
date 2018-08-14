@@ -51,6 +51,13 @@ return [
             'days' => 7,
         ],
 
+        'error_daily' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/errors/laravel.log'),
+            'level' => 'debug',
+            'days' => 7
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
