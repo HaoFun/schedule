@@ -16,4 +16,6 @@ use Illuminate\Http\Request;
 Route::namespace('Api')->group(function ($route) {
     $route->resource('departments', 'DepartmentController');
     $route->resource('trackers', 'TrackerController');
+    $route->get('projects/search', 'ProjectController@search')->name('projects.search');
+    $route->resource('projects', 'ProjectController');
 });

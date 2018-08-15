@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
 {
+    static public $status = [1,2,3,4];
+    static public $priority = [1,2,3];
     protected $fillable = [
         'project_id', 'title', 'status', 'priority', 'remark',
         'created_date', 'due_date', 'completed_date', 'release_date',
         'created_by', 'updated_by'
     ];
 
-    const PriorityList = [
-        1 => '高', 2 => '正常', 3 => '低'
-    ];
+    public function getStatusAttribute($value)
+    {
+        return trans('transformer.issue_status_list.' . $value);
+    }
 
     public function getPriorityAttribute($value)
     {
-        return self::PriorityList[$value];
+        return trans('transformer.priority_list.' . $value);
     }
 
     public function user()
@@ -41,6 +44,16 @@ class Issue extends Model
     public function contents()
     {
         return $this->morphMany(Content::class, 'contentable');
+    }
+
+    public function histories()
+    {
+        return $this->morphMany(History::class, 'historiesable');
+    }
+
+    public function types()
+    {
+        return $this->belongsTo(Type::class, 'type_id')->select('type_name');
     }
 
     public function created_by_user()

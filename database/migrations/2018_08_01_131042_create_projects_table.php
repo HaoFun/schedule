@@ -15,8 +15,8 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('project_name', 50)->index()->comment('專案名稱');
-            $table->string('status', 10)->index()->comment('專案狀態');
+            $table->string('title', 50)->index()->comment('專案名稱');
+            $table->unsignedTinyInteger('status')->index()->comment('專案狀態(1:新建立/2:提案中/3:實做中/4:已結案)');
             $table->unsignedTinyInteger('priority')->index()->comment('專案優先度(1:高/2:正常/3:低)');
             $table->string('remark', 255)->nullable()->comment('備注');
             $table->timestamp('created_date')->index()->nullable()->comment('專案開始日期');

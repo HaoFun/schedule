@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContentsTable extends Migration
+class CreateHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateContentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('contentable_id')->index()->comment('多態ID關聯');
-            $table->string('contentable_type', 30)->index()->comment('多態模型關聯');
-            $table->text('content')->nullable()->comment('內容');
-            $table->unsignedInteger('created_by')->comment('新增者');
+            $table->unsignedInteger('historiesable_id')->index()->comment('多態關聯ID');
+            $table->string('historiesable_type', 30)->index()->comment('多態關聯模型');
+            $table->json('history_log')->comment('歷史變更紀錄');
             $table->unsignedInteger('updated_by')->comment('更新者');
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ class CreateContentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contents');
+        Schema::dropIfExists('histories');
     }
 }

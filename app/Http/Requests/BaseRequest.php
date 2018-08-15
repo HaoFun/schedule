@@ -19,7 +19,10 @@ class BaseRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         if ($this->isJson()) {
-            throw new HttpResponseException($this->errorWith($validator->errors()->messages(), config('common.validation_error'), 422));
+            throw new HttpResponseException(
+                $this->errorWith($validator->errors()->messages(),
+                    trans('common.validation_error'),
+                    422));
         }
         parent::failedValidation($validator);
     }

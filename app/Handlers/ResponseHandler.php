@@ -22,7 +22,7 @@ trait ResponseHandler
         return $this->transformerResponse($message, $code);
     }
 
-    public function successWith($data = [], $message = 'success', $code)
+    public function successWith($data = [], $message = 'success', $code = 200)
     {
         return $this->transformerResponse($message, $code, $data);
     }
@@ -39,13 +39,18 @@ trait ResponseHandler
         return $this->transformerResponse($message, $code, $data);
     }
 
-    public function transformerResponse($message, $code, $data = [])
+    public function makeDefaultResponse($message, $code)
     {
-        $response = [
+        return [
             'code' => $code,
             'message' => $message,
             'status' => $this->getStatus(),
         ];
+    }
+
+    public function transformerResponse($message, $code, $data = [])
+    {
+        $response = $this->makeDefaultResponse($message, $code);
         $response = count($data) ?
             array_merge($response, ['data' => $data]) :
             $response;

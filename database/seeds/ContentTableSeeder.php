@@ -12,7 +12,7 @@ class ContentTableSeeder extends Seeder
             [
                 'contentable_id' => 1,
                 'contentable_type' => 'projects',
-                'content_body' => 'TestProjectBody',
+                'content' => 'TestProjectBody',
                 'created_by' => 1,
                 'updated_by' => 1,
                 'created_at' => $now,
@@ -21,7 +21,7 @@ class ContentTableSeeder extends Seeder
             [
                 'contentable_id' => 1,
                 'contentable_type' => 'issues',
-                'content_body' => 'TestIssueBody',
+                'content' => 'TestIssueBody',
                 'created_by' => 1,
                 'updated_by' => 1,
                 'created_at' => $now,

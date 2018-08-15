@@ -17,7 +17,8 @@ class CreateIssuesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id')->index()->comment('專案關聯ID');
             $table->string('title', 50)->comment('議題標題');
-            $table->string('status', 10)->index()->comment('議題狀態');
+            $table->unsignedTinyInteger('status')->index()->comment('議題狀態(1:新建立/2:實做中/3:待測試/4:已完成)');
+            $table->unsignedInteger('type_id')->index()->comment('類型關聯ID');
             $table->unsignedTinyInteger('priority')->index()->comment('議題優先度(1:高/2:正常/3:低)');
             $table->string('remark', 255)->nullable()->comment('備注');
             $table->timestamp('created_date')->index()->nullable()->comment('議題開始日期');

@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    static public $status = [1,2,3,4];
+    static public $priority = [1,2,3];
     protected $fillable = [
-        'project_name', 'status', 'priority', 'remark', 'created_date',
+        'title', 'status', 'priority', 'remark', 'created_date',
         'due_date', 'completed_date', 'release_date', 'created_by',
         'updated_by'
     ];
 
-    const PriorityList = [
-        1 => '高', 2 => '正常', 3 => '低'
-    ];
-
     public function getPriorityAttribute($value)
     {
-        return self::PriorityList[$value];
+        return trans('transformer.priority.' . $value);
+    }
+
+    public function getStatusAttribute($value)
+    {
+        return trans('transformer.project_status_list.' . $value);
     }
 
     public function user()
@@ -27,9 +30,14 @@ class Project extends Model
             ->withTimestamps();
     }
 
+    public function issues()
+    {
+        return $this->hasOne(Issue::class, 'project_id');
+    }
+
     public function tracker()
     {
-        return $this->belongsToMany(Tracker::class, 'issue_tracker')
+        return $this->belongsToMany(Tracker::class, 'project_tracker')
             ->withTimestamps();
     }
 
@@ -43,15 +51,20 @@ class Project extends Model
         return $this->morphMany(Content::class, 'contentable');
     }
 
+    public function histories()
+    {
+        return $this->morphMany(History::class, 'historiesable');
+    }
+
     public function created_by_user()
     {
         return $this->belongsTo(User::class, 'created_by')
-            ->select('account');
+            ->select('id', 'account');
     }
 
     public function updated_by_user()
     {
         return $this->belongsTo(User::class, 'updated_by')
-            ->select('account');
+            ->select('id', 'account');
     }
 }

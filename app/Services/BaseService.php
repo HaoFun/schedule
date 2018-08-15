@@ -11,6 +11,11 @@ abstract class BaseService implements ServiceInterface
         return $this->repository->all($column);
     }
 
+    public function paginate($perPage = 20, $column = ['*'])
+    {
+        return $this->repository->paginate($perPage, $column);
+    }
+
     public function create(array $data)
     {
         return $this->repository->create($data);

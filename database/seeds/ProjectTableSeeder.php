@@ -8,8 +8,8 @@ class ProjectTableSeeder extends Seeder
     public function run()
     {
         Project::create([
-            'project_name' => 'TestProject',
-            'status' => 'created',
+            'title' => 'TestProject',
+            'status' => 1,
             'priority' => 2,
             'created_by' => 1,
             'updated_by' => 1

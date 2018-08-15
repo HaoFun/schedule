@@ -11,7 +11,6 @@ class TrackerController extends Controller
 {
     protected $service;
 
-    const defaultName = 'Tracker';
     const defaultFields = [
         'tracker_name', 'tracker_info'
     ];
@@ -29,8 +28,8 @@ class TrackerController extends Controller
     public function store(TrackerRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::defaultFields)) ?
-            $this->success(sprintf(trans('common.create_success'), self::defaultName)) :
-            $this->error(sprintf(trans('common.create_error'), self::defaultName));
+            $this->success(sprintf(trans('common.create_success'), trans('transformer.tracker'))) :
+            $this->error(sprintf(trans('common.create_error'), trans('transformer.tracker')));
     }
 
     public function show(Tracker $tracker)
@@ -41,14 +40,14 @@ class TrackerController extends Controller
     public function update(TrackerRequest $request, Tracker $tracker)
     {
         return $this->service->modify(array_only($request->all(), self::defaultFields), $tracker) ?
-            $this->success(sprintf(trans('common.modify_success'), self::defaultName)) :
-            $this->error(sprintf(trans('common.modify_error'), self::defaultName));
+            $this->success(sprintf(trans('common.modify_success'), trans('transformer.tracker'))) :
+            $this->error(sprintf(trans('common.modify_error'), trans('transformer.tracker')));
     }
 
     public function destroy($id)
     {
         return $this->service->delete($id) ?
-            $this->success(sprintf(trans('common.delete_success'), self::defaultName, $id)) :
-            $this->error(sprintf(trans('common.delete_error'), self::defaultName, $id));
+            $this->success(sprintf(trans('common.delete_success'), trans('transformer.tracker'), $id)) :
+            $this->error(sprintf(trans('common.delete_error'), trans('transformer.tracker'), $id));
     }
 }

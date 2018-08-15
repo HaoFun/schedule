@@ -11,7 +11,6 @@ class DepartmentController extends Controller
 {
     protected $service;
 
-    const defaultName = 'Department';
     const defaultFields = [
         'department_name', 'department_info'
     ];
@@ -29,8 +28,8 @@ class DepartmentController extends Controller
     public function store(DepartmentRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::defaultFields)) ?
-            $this->success(sprintf(trans('common.create_success'), self::defaultName)) :
-            $this->error(sprintf(trans('common.create_error'), self::defaultName));
+            $this->success(sprintf(trans('common.create_success'), trans('transformer.department'))) :
+            $this->error(sprintf(trans('common.create_error'), trans('transformer.department')));
     }
 
     public function show(Department $department)
@@ -41,14 +40,14 @@ class DepartmentController extends Controller
     public function update(DepartmentRequest $request, Department $department)
     {
         return $this->service->modify(array_only($request->all(), self::defaultFields), $department) ?
-            $this->success(sprintf(trans('common.modify_success'), self::defaultName)) :
-            $this->error(sprintf(trans('common.modify_error'), self::defaultName));
+            $this->success(sprintf(trans('common.modify_success'), trans('transformer.department'))) :
+            $this->error(sprintf(trans('common.modify_error'), trans('transformer.department')));
     }
 
     public function destroy($id)
     {
         return $this->service->delete($id) ?
-            $this->success(sprintf(trans('common.delete_success'), self::defaultName, $id)) :
-            $this->error(sprintf(trans('common.delete_error'), self::defaultName, $id));
+            $this->success(sprintf(trans('common.delete_success'), trans('transformer.department'), $id)) :
+            $this->error(sprintf(trans('common.delete_error'), trans('transformer.department'), $id));
     }
 }

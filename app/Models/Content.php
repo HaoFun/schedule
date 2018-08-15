@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     protected $fillable = [
-        'contentable_id', 'contentable_type', 'content_body', 'remark',
+        'contentable_id', 'contentable_type', 'content',
         'created_by', 'updated_by'
     ];
 
@@ -19,6 +19,11 @@ class Content extends Model
     public function files()
     {
         return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function histories()
+    {
+        return $this->morphMany(History::class, 'historiesable');
     }
 
     public function created_by_user()

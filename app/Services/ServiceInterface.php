@@ -6,6 +6,8 @@ interface ServiceInterface
 {
     public function index($column = ['*']);
 
+    public function paginate($perPage = 20, $column = ['*']);
+
     public function create(array $data);
 
     public function show($id, $column = ['*']);
