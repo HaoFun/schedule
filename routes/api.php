@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,5 +15,6 @@ Route::namespace('Api')->group(function ($route) {
     $route->resource('departments', 'DepartmentController');
     $route->resource('trackers', 'TrackerController');
     $route->get('projects/search', 'ProjectController@search')->name('projects.search');
+    $route->get('projects/{project}/history', 'ProjectController@history')->name('projects.history');
     $route->resource('projects', 'ProjectController');
 });

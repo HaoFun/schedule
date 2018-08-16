@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'tracker' => '標籤',
-    'department' => '部門',
+    'tracker' => 'Tracker',
+    'department' => 'Department',
+    'project' => 'Project',
     'project_status_list' => [
         1 => '新建立', 2 => '提案中', 3 => '實做中', 4 => '已結案'
     ],

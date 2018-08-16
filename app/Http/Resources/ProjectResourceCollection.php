@@ -8,7 +8,11 @@ class ProjectResourceCollection extends ResourceCollection
 {
     public function toArray($request)
     {
-        return ['data' => ['projects' => ProjectResource::collection($this->collection)]];
+        $responseField = 'projects';
+        if ($request->route()->getName() === 'projects.history') {
+            $responseField = 'histories';
+        }
+        return ['data' => [$responseField => ProjectResource::collection($this->collection)]];
     }
 
     public function with($request)

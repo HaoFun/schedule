@@ -17,4 +17,9 @@ class ProjectService extends BaseService
     {
         return $this->repository->search($fields);
     }
+
+    public function historyBy($id)
+    {
+        return $this->repository->historyBy($id);
+    }
 }

@@ -16,5 +16,14 @@ class UsersTableSeeder extends Seeder
             'department_id' => 1,
             'api_token' => str_random(64)
         ]);
+
+        User::create([
+            'account' => 'Tone',
+            'name' => 'Tone',
+            'email' => 'tone@gmail.com',
+            'password' => Hash::make('123123'),
+            'department_id' => 1,
+            'api_token' => str_random(64)
+        ]);
     }
 }

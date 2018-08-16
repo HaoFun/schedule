@@ -16,11 +16,6 @@ class Content extends Model
         return $this->morphTo();
     }
 
-    public function files()
-    {
-        return $this->morphMany(File::class, 'fileable');
-    }
-
     public function histories()
     {
         return $this->morphMany(History::class, 'historiesable');

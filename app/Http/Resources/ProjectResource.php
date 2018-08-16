@@ -14,6 +14,22 @@ class ProjectResource extends JsonResource
                     'title' => $this->title
                 ];
             }
+            case 'projects.history' : {
+                $historyLog = $this->history_log ? json_decode($this->history_log, true) : [];
+                return [
+                    'id' => $this->id,
+                    'project_id' => $this->historiesable_id,
+                    'updated_by' => optional($this->updated_by_user)->account,
+                    'action' => data_get($historyLog, 'action', null),
+                    'status' => data_get($historyLog, 'status', null),
+                    'content' => data_get($historyLog, 'content', []),
+                    'created_date' => data_get($historyLog, 'created_date', []),
+                    'due_date' => data_get($historyLog, 'due_date', []),
+                    'completed_date' => data_get($historyLog, 'completed_date', []),
+                    'release_date' => data_get($historyLog, 'release_date', []),
+                    'manager' => data_get($historyLog, 'manager', [])
+                ];
+            }
             default : {
                 return [
                     'id' => $this->id,

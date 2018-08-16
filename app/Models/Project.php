@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    static public $status = [1,2,3,4];
-    static public $priority = [1,2,3];
     protected $fillable = [
         'title', 'status', 'priority', 'remark', 'created_date',
         'due_date', 'completed_date', 'release_date', 'created_by',

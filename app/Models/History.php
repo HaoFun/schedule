@@ -15,4 +15,10 @@ class History extends Model
     {
         return $this->morphTo();
     }
+
+    public function updated_by_user()
+    {
+        return $this->belongsTo(User::class, 'updated_by')
+            ->select('id', 'account');
+    }
 }
