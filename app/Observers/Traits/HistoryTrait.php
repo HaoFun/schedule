@@ -9,6 +9,8 @@ trait HistoryTrait
 {
     protected $content;
     protected $file;
+    protected $manager;
+    protected $assignee;
 
     public function transformerHistory($action = 'created', Model $model, $modify = false)
     {
@@ -25,14 +27,14 @@ trait HistoryTrait
     {
         switch ($action) {
             case 'created' : {
-                return [
+                return array_merge([
                     'action' => $action,
                     'content' => $this->content ?? [],
                     'file' => $this->file ?? [],
-                ];
+                ], $this->getOwner());
             }
             case 'updated' : {
-                return [
+                return array_merge([
                     'action' => $action,
                     'status' => $this->checkEqual($model, 'status'),
                     'priority' => $this->checkEqual($model, 'priority'),
@@ -41,13 +43,8 @@ trait HistoryTrait
                     'completed_date' => $this->checkEqual($model, 'completed_date', 'date'),
                     'release_date' => $this->checkEqual($model, 'release_date', 'date'),
                     'content' => $this->content ?? [],
-                    'file' => $this->file ?? [],
-                    'manager' => $this->manager ?? [
-                            'attached' => [],
-                            'detached' => [],
-                            'updated' => []
-                        ],
-                ];
+                    'file' => $this->file ?? []
+                ], $this->getOwner());
             }
             case 'modify_content' : {
                 return [
@@ -65,6 +62,19 @@ trait HistoryTrait
                 return false;
             }
         }
+    }
+
+    public function getOwner()
+    {
+        $owner = getActionController(request()->route()->getActionName()) === 'ProjectController' ?
+            'manager' : 'assignee' ;
+        return [
+            $owner => $this->$owner ?? [
+                    'attached' => [],
+                    'detached' => [],
+                    'updated' => []
+                ]
+        ];
     }
 
     public function checkEqual($model, $attribute, $type = 'normal')

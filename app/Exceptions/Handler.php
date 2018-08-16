@@ -2,11 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Handlers\ResponseHandler;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use ResponseHandler;
     /**
      * A list of the exception types that are not reported.
      *

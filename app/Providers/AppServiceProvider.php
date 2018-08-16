@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Issue;
 use App\Models\Project;
+use App\Observers\IssueObserver;
 use App\Observers\ProjectObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
             'contents' => 'App\Models\Content',
         ]);
         Project::observe(ProjectObserver::class);
+        Issue::observe(IssueObserver::class);
     }
 
     /**

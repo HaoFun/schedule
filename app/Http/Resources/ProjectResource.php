@@ -21,7 +21,7 @@ class ProjectResource extends JsonResource
                     'project_id' => $this->historiesable_id,
                     'updated_by' => optional($this->updated_by_user)->account,
                     'action' => data_get($historyLog, 'action', null),
-                    'status' => data_get($historyLog, 'status', null),
+                    'status' => data_get($historyLog, 'status', []),
                     'content' => data_get($historyLog, 'content', []),
                     'created_date' => data_get($historyLog, 'created_date', []),
                     'due_date' => data_get($historyLog, 'due_date', []),

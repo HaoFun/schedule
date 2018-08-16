@@ -17,4 +17,5 @@ Route::namespace('Api')->group(function ($route) {
     $route->get('projects/search', 'ProjectController@search')->name('projects.search');
     $route->get('projects/{project}/history', 'ProjectController@history')->name('projects.history');
     $route->resource('projects', 'ProjectController');
+    $route->resource('issues', 'IssueController');
 });
