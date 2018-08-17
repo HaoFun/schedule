@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
 {
-    static public $status = [1,2,3,4];
-    static public $priority = [1,2,3];
     protected $fillable = [
-        'project_id', 'title', 'status', 'priority', 'remark',
+        'project_id', 'title', 'status', 'priority', 'remark', 'type_id',
         'created_date', 'due_date', 'completed_date', 'release_date',
         'created_by', 'updated_by'
     ];
@@ -28,6 +26,11 @@ class Issue extends Model
     {
         return $this->belongsToMany(User::class, 'issue_user')
             ->withTimestamps();
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 
     public function tracker()

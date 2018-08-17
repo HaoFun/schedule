@@ -13,9 +13,9 @@ class ProjectService extends BaseService
         $this->repository = $repository;
     }
 
-    public function search($fields = ['*'])
+    public function search($perpage = 20, $fields = ['*'])
     {
-        return $this->repository->search($fields);
+        return $this->repository->search($perpage, $fields);
     }
 
     public function historyBy($id)

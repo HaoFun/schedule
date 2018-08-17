@@ -9,7 +9,7 @@ class ProjectRepository extends BaseRepository
         return 'App\Models\Project';
     }
 
-    public function search($fields = ['*'])
+    public function search($perpage, $fields = ['*'])
     {
         return $this->model->select($fields)
             ->with('user:account', 'tracker:tracker_name', 'created_by_user:account', 'updated_by_user:account')
@@ -32,7 +32,7 @@ class ProjectRepository extends BaseRepository
             return $q->whereBetween('completed', [request('completed_date_start'), request('completed_date_end')]);
         })->when(request('release_date_start'), function ($q) {
             return $q->whereBetween('release_date', [request('release_date_start'), request('release_date_end')]);
-        })->get();
+        })->paginate($perpage);
     }
 
     public function historyBy($id)

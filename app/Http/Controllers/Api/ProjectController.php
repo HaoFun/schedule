@@ -12,13 +12,13 @@ class ProjectController extends Controller
 {
     protected $service;
 
-    const titleFields = ['title'];
+    const indexFields = ['title'];
     const createFields = [
-        'title', 'status', 'priority', 'created_date', 'due_date', 'created_by',
+        'title', 'status', 'priority', 'remark', 'created_date', 'due_date', 'created_by',
         'updated_by'
     ];
     const updateFields = [
-        'title', 'status', 'priority', 'created_date', 'due_date', 'completed_date',
+        'title', 'status', 'priority', 'remark', 'created_date', 'due_date', 'completed_date',
         'release_date', 'created_by', 'updated_by'
     ];
 
@@ -29,7 +29,7 @@ class ProjectController extends Controller
 
     public function search(ProjectRequest $request)
     {
-        return new ProjectResourceCollection($this->service->search());
+        return new ProjectResourceCollection($this->service->search(20));
     }
 
     public function history($id)
@@ -40,7 +40,7 @@ class ProjectController extends Controller
 
     public function index()
     {
-        return new ProjectResourceCollection($this->service->paginate(20, self::titleFields));
+        return new ProjectResourceCollection($this->service->index(self::indexFields));
     }
 
     public function store(ProjectRequest $request)

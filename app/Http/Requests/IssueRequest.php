@@ -2,29 +2,32 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class IssueRequest extends FormRequest
+class IssueRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch ($this->route()->getName()) {
+            case 'issues.search' : {
+                return [
+                    'title' => 'nullable',
+                    'status' => 'nullable',
+                    'priority' => 'nullable|integer',
+                    'project_name' => 'nullable|string',
+                    'type_name' => 'nullable|exists:types,type_name',
+                    'created_date_start' => 'nullable|date|required_with:created_date_end',
+                    'created_date_end' => 'nullable|date|required_with:created_date_start|after_or_equal:created_date_start',
+                    'due_date_start' => 'nullable|date|required_with:due_date_end',
+                    'due_date_end' => 'nullable|date|required_with:due_date_start|after_or_equal:due_date_start',
+                    'completed_date_start' => 'nullable|date|required_with:completed_date_end',
+                    'completed_date_end' => 'nullable|date|required_with:completed_date_start|after_or_equal:completed_date_start',
+                    'release_date_start' => 'nullable|date|required_with:release_date_end',
+                    'release_date_end' => 'nullable|date|required_with:release_date_start|after_or_equal:release_date_start',
+                    'assignee' => 'nullable|integer|exists:users,id'
+                ];
+            }
+            default : {
+                return [];
+            }
+        }
     }
 }
