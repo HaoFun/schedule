@@ -12,7 +12,7 @@ class ProjectTableSeeder extends Seeder
             'status' => 1,
             'priority' => 2,
             'created_by' => 1,
-            'updated_by' => 1
+            'updated_by' => 1,
         ]);
     }
 }

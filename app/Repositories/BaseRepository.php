@@ -48,9 +48,12 @@ abstract class BaseRepository implements RepositoryInterface
         return $this->model->where($field, $attribute)->update($data);
     }
 
-    public function delete($id)
+    public function delete($attribute)
     {
-        return $this->model->destroy($id);
+        if ($attribute instanceof Model) {
+            return $attribute->delete();
+        }
+        return $this->model->destroy($attribute);
     }
 
     public function find($id, $columns = ['*'])
@@ -61,5 +64,10 @@ abstract class BaseRepository implements RepositoryInterface
     public function findBy($field, $value, $columns = ['*'])
     {
         return $this->model->where($field, $value)->first($columns);
+    }
+
+    public function findWith($with, $id, $columns = ['*'])
+    {
+        return $this->model->with($with)->find($id, $columns);
     }
 }

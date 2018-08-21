@@ -9,7 +9,7 @@ class Issue extends Model
     protected $fillable = [
         'project_id', 'title', 'status', 'priority', 'remark', 'type_id',
         'created_date', 'due_date', 'completed_date', 'release_date',
-        'created_by', 'updated_by'
+        'created_by', 'updated_by', 'updated_at'
     ];
 
     public function getStatusAttribute($value)

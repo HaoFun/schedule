@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class History extends Model
 {
     protected $fillable = [
-        'historiesable_id', 'historiesable_type', 'history_log',
+        'historiesable_id', 'historiesable_type', 'log', 'action',
         'updated_by'
     ];
 

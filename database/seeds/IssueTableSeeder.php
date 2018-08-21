@@ -14,7 +14,7 @@ class IssueTableSeeder extends Seeder
             'status' => 1,
             'priority' => 1,
             'created_by' => 1,
-            'updated_by' => 1
+            'updated_by' => 1,
         ]);
     }
 }

@@ -12,12 +12,12 @@ class IssueObserver
 
     public function created(Issue $issue)
     {
-        $this->doAction($issue, 'created');
+        $this->doAction($issue, 'create');
     }
 
     public function updated(Issue $issue)
     {
-        $this->doAction($issue, 'updated');
+        $this->doAction($issue, 'update');
     }
 
     public function deleted(Issue $issue)
@@ -33,7 +33,7 @@ class IssueObserver
     {
         $this->makeContent($issue);
         $this->makeFile($issue);
-        $this->makeManager($issue, 'assignee');
+        $this->makeOwner($issue, 'assignee');
         if ($historyLog = $this->transformerHistory($type, $issue)) {
             $issue->histories()->create($historyLog);
         }

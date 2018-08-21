@@ -12,12 +12,12 @@ class ProjectObserver
 
     public function created(Project $project)
     {
-        $this->doAction($project, 'created');
+        $this->doAction($project, 'create');
     }
 
     public function updated(Project $project)
     {
-        $this->doAction($project, 'updated');
+        $this->doAction($project, 'update');
     }
 
     public function deleted(Project $project)
@@ -34,7 +34,7 @@ class ProjectObserver
     {
         $this->makeContent($project);
         $this->makeFile($project);
-        $this->makeManager($project, 'manager');
+        $this->makeOwner($project, 'manager');
         if ($historyLog = $this->transformerHistory($type, $project)) {
             $project->histories()->create($historyLog);
         }

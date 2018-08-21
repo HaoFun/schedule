@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TrackerRequest;
-use App\Models\Tracker;
 use App\Services\TrackerService;
 
 class TrackerController extends Controller
@@ -28,26 +27,30 @@ class TrackerController extends Controller
     public function store(TrackerRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::defaultFields)) ?
-            $this->success(sprintf(trans('common.create_success'), trans('transformer.tracker'))) :
-            $this->error(sprintf(trans('common.create_error'), trans('transformer.tracker')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.tracker'))) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.tracker')));
     }
 
-    public function show(Tracker $tracker)
+    public function show($id)
     {
-        return $this->success($tracker->toArray());
+        $tracker = $this->service->show($id);
+        return $tracker ?
+            $this->success($tracker) :
+            $this->error($this->makeMessage('common.not_found_id', trans('transformer.tracker'), $id));
     }
 
-    public function update(TrackerRequest $request, Tracker $tracker)
+    public function update(TrackerRequest $request, $id)
     {
-        return $this->service->modify(array_only($request->all(), self::defaultFields), $tracker) ?
-            $this->success(sprintf(trans('common.modify_success'), trans('transformer.tracker'))) :
-            $this->error(sprintf(trans('common.modify_error'), trans('transformer.tracker')));
+        return $this->service->modify(array_only($request->all(), self::defaultFields), $id) ?
+            $this->success($this->makeMessage('common.modify_success', trans('transformer.tracker'))) :
+            $this->error($this->makeMessage('common.modify_error', trans('transformer.tracker')));
     }
 
     public function destroy($id)
     {
-        return $this->service->delete($id) ?
-            $this->success(sprintf(trans('common.delete_success'), trans('transformer.tracker'), $id)) :
-            $this->error(sprintf(trans('common.delete_error'), trans('transformer.tracker'), $id));
+        $response = $this->service->delete($id);
+        return $response['status'] === true ?
+            $this->success($response['message']) :
+            $this->error($response['message']);
     }
 }

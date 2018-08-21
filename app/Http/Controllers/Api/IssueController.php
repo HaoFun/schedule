@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IssueRequest;
 use App\Http\Resources\IssueResourceCollection;
-use App\Models\Issue;
 use App\Services\IssueService;
 
 class IssueController extends Controller
@@ -46,21 +45,21 @@ class IssueController extends Controller
     public function store(IssueRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::createFields)) ?
-            $this->success(sprintf(trans('common.create_success'), trans('transformer.issue'))) :
-            $this->error(sprintf(trans('common.create_error'), trans('transformer.issue')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.issue'))) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.issue')));
     }
 
-    public function update(IssueRequest $request, Issue $issue)
+    public function update(IssueRequest $request, $id)
     {
-        return $this->service->modify(array_only($request->all(), self::updateFields), $issue) ?
-            $this->success(sprintf(trans('common.modify_success'), trans('transformer.issue'))) :
-            $this->error(sprintf(trans('common.modify_error'), trans('transformer.issue')));
+        return $this->service->modify(array_only($request->all(), self::updateFields), $id) ?
+            $this->success($this->makeMessage('common.modify_success', trans('transformer.issue'))) :
+            $this->error($this->makeMessage('common.modify_error', trans('transformer.issue')));
     }
 
     public function destroy($id)
     {
         return $this->service->delete($id) ?
-            $this->success(sprintf(trans('common.delete_success'), trans('transformer.issue'), $id)) :
-            $this->error(sprintf(trans('common.delete_error'), trans('transformer.issue'), $id));
+            $this->success($this->makeMessage('common.delete_success', trans('transformer.issue'), $id)) :
+            $this->error($this->makeMessage('common.delete_error', trans('transformer.issue'), $id));
     }
 }

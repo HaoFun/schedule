@@ -9,7 +9,7 @@ class Project extends Model
     protected $fillable = [
         'title', 'status', 'priority', 'remark', 'created_date',
         'due_date', 'completed_date', 'release_date', 'created_by',
-        'updated_by'
+        'updated_by', 'updated_at'
     ];
 
     public function getPriorityAttribute($value)

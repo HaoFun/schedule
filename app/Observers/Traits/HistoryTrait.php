@@ -2,100 +2,33 @@
 
 namespace App\Observers\Traits;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 trait HistoryTrait
 {
-    protected $content;
-    protected $file;
-    protected $manager;
-    protected $assignee;
-
-    public function transformerHistory($action = 'created', Model $model, $modify = false)
+    public function transformerHistory($action = 'create', Model $model, $modify = false)
     {
-        $historyLog = $this->makeHistoryLog($action, $model, $modify);
+        $historyLog = $this->makeHistoryLog($model, $modify);
         return $historyLog ?
             [
-                'history_log' => json_encode($historyLog),
+                'action' => $action,
+                'log' => json_encode($historyLog),
                 'updated_by' => $model->updated_by
             ] :
             false;
     }
 
-    public function makeHistoryLog($action, $model, $modify)
+    public function makeHistoryLog($model, $modify)
     {
-        switch ($action) {
-            case 'created' : {
-                return array_merge([
-                    'action' => $action,
-                    'content' => $this->content ?? [],
-                    'file' => $this->file ?? [],
-                ], $this->getOwner());
-            }
-            case 'updated' : {
-                return array_merge([
-                    'action' => $action,
-                    'status' => $this->checkEqual($model, 'status'),
-                    'priority' => $this->checkEqual($model, 'priority'),
-                    'created_date' => $this->checkEqual($model, 'created_date', 'date'),
-                    'due_date' => $this->checkEqual($model, 'due_date', 'date'),
-                    'completed_date' => $this->checkEqual($model, 'completed_date', 'date'),
-                    'release_date' => $this->checkEqual($model, 'release_date', 'date'),
-                    'content' => $this->content ?? [],
-                    'file' => $this->file ?? []
-                ], $this->getOwner());
-            }
-            case 'modify_content' : {
-                return [
-                    'action' => $action,
-                    'content' => optional($modify->id) ? $modify->id : [],
-                ];
-            }
-            case 'modify_file' : {
-                return [
-                    'action' => $action,
-                    'file' => optional($modify->file_name) ? $modify->file_name : []
-                ];
-            }
-            default : {
-                return false;
+        $historyLog = [];
+        $modelDirty = $model->getDirty();
+        $morphDirty = $this->getMorphDirty();
+        if (count($modelDirty)) {
+            foreach ($modelDirty as $key => $value) {
+                $historyLog[$key] = [$model->getOriginal($key), $value];
             }
         }
-    }
-
-    public function getOwner()
-    {
-        $owner = getActionController(request()->route()->getActionName()) === 'ProjectController' ?
-            'manager' : 'assignee' ;
-        return [
-            $owner => $this->$owner ?? [
-                    'attached' => [],
-                    'detached' => [],
-                    'updated' => []
-                ]
-        ];
-    }
-
-    public function checkEqual($model, $attribute, $type = 'normal')
-    {
-        switch ($type) {
-            case 'date' : {
-                $originAttribute = Carbon::parse($model->getOriginal($attribute))->format('Y-m-d');
-                $afterAttribute = !is_null(request($attribute, null)) ?
-                    Carbon::parse(request($attribute))->format('Y-m-d') :
-                    null;
-                break;
-            }
-            case 'normal' :
-            default : {
-                $originAttribute = $model->getOriginal($attribute);
-                $afterAttribute = request($attribute, null);
-                break;
-            }
-        }
-        return $originAttribute === $afterAttribute || is_null($afterAttribute) ?
-            [$originAttribute, $originAttribute] :
-            [$originAttribute, $afterAttribute];
+        count($morphDirty) ? $historyLog = array_merge($historyLog, $morphDirty) : null;
+        return $historyLog;
     }
 }

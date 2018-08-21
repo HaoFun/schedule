@@ -22,4 +22,14 @@ class IssueService extends BaseService
     {
         return $this->repository->historyBy($id);
     }
+
+    public function modify(array $data, $attribute)
+    {
+        if ($issue = $this->repository->find($attribute)) {
+            return parent::modify(array_merge($data, [
+                'updated_at' => now()
+            ]), $issue);
+        }
+        return false;
+    }
 }

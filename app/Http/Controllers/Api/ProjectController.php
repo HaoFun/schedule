@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\ProjectResourceCollection;
-use App\Models\Project;
 use App\Services\ProjectService;
 
 class ProjectController extends Controller
@@ -46,21 +45,21 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::createFields)) ?
-            $this->success(sprintf(trans('common.create_success'), trans('transformer.project'))) :
-            $this->error(sprintf(trans('common.create_error'), trans('transformer.project')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.project'))) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.project')));
     }
 
-    public function update(ProjectRequest $request, Project $project)
+    public function update(ProjectRequest $request, $id)
     {
-        return $this->service->modify(array_only($request->all(), self::updateFields), $project) ?
-            $this->success(sprintf(trans('common.modify_success'), trans('transformer.project'))) :
-            $this->error(sprintf(trans('common.modify_error'), trans('transformer.project')));
+        return $this->service->modify(array_only($request->all(), self::updateFields), $id) ?
+            $this->success($this->makeMessage('common.modify_success', trans('transformer.project'))) :
+            $this->error($this->makeMessage('common.modify_error', trans('transformer.project')));
     }
 
     public function destroy($id)
     {
         return $this->service->delete($id) ?
-            $this->success(sprintf(trans('common.delete_success'), trans('transformer.project'), $id)) :
-            $this->error(sprintf(trans('common.delete_error'), trans('transformer.project'), $id));
+            $this->success($this->makeMessage('common.delete_success', trans('transformer.project'), $id)) :
+            $this->error($this->makeMessage('common.delete_error', trans('transformer.project'), $id));
     }
 }

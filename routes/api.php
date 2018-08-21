@@ -21,4 +21,5 @@ Route::namespace('Api')->group(function ($route) {
     $route->get('issues/{issue}/history', 'IssueController@history')->name('issues.history');
     $route->resource('issues', 'IssueController');
     $route->get('contents/index');
+    $route->resource('contents', 'ContentController', ['only' => ['show', 'edit', 'update', 'destroy']]);
 });
