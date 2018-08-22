@@ -8,17 +8,12 @@ class Content extends Model
 {
     protected $fillable = [
         'contentable_id', 'contentable_type', 'content',
-        'created_by', 'updated_by'
+        'created_by', 'updated_by', 'updated_at'
     ];
 
     public function contentable()
     {
         return $this->morphTo();
-    }
-
-    public function histories()
-    {
-        return $this->morphMany(History::class, 'historiesable');
     }
 
     public function created_by_user()

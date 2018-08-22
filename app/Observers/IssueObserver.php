@@ -10,9 +10,25 @@ class IssueObserver
 {
     use HistoryTrait, MakeRelationDataTrait;
 
+    const finishedStatus = 4;
+
+    public function creating(Issue $issue)
+    {
+        if (!$issue->start_date) {
+            $issue->start_date = now();
+        }
+    }
+
     public function created(Issue $issue)
     {
         $this->doAction($issue, 'create');
+    }
+
+    public function updating(Issue $issue)
+    {
+        if ($issue->status === trans('transformer.issue_status_list')[self::finishedStatus]) {
+            $issue->release_date = now();
+        }
     }
 
     public function updated(Issue $issue)

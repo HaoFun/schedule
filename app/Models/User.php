@@ -45,4 +45,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class, 'project_user')
             ->withTimestamps();
     }
+
+    public function todos()
+    {
+        return $this->hasMany(Todo::class);
+    }
 }

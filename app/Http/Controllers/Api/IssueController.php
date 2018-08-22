@@ -13,11 +13,11 @@ class IssueController extends Controller
 
     const indexFields = ['title'];
     const createFields = [
-        'project_id', 'title', 'status', 'priority', 'remark', 'type_id', 'created_date', 'due_date',
+        'project_id', 'title', 'status', 'priority', 'remark', 'type_id', 'start_date', 'due_date',
         'created_by', 'updated_by'
     ];
     const updateFields = [
-        'project_id', 'title', 'status', 'priority', 'remark', 'type_id', 'created_date', 'due_date',
+        'project_id', 'title', 'status', 'priority', 'remark', 'type_id', 'start_date', 'due_date',
         'completed_date', 'release_date', 'created_by', 'updated_by'
     ];
 
@@ -52,8 +52,8 @@ class IssueController extends Controller
     public function update(IssueRequest $request, $id)
     {
         return $this->service->modify(array_only($request->all(), self::updateFields), $id) ?
-            $this->success($this->makeMessage('common.modify_success', trans('transformer.issue'))) :
-            $this->error($this->makeMessage('common.modify_error', trans('transformer.issue')));
+            $this->success($this->makeMessage('common.modify_success', trans('transformer.issue'), $id)) :
+            $this->error($this->makeMessage('common.modify_error', trans('transformer.issue'), $id));
     }
 
     public function destroy($id)

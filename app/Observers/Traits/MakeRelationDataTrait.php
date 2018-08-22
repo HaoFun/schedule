@@ -4,11 +4,15 @@ namespace App\Observers\Traits;
 
 trait MakeRelationDataTrait
 {
+    protected $createAction = 'create';
+    protected $updateAction = 'update';
+    protected $deleteAction = 'delete';
+
     protected $contentFields = ['content', 'created_by', 'updated_by'];
     protected $fileFields = ['file_name', 'file_path', 'created_by', 'updated_by'];
     protected $content = [];
     protected $file = [];
-    protected $owner;
+    protected $owner = 'manager';
     protected $manager = [];
     protected $assignee = [];
 
@@ -63,9 +67,18 @@ trait MakeRelationDataTrait
         $contentList = $this->getContentList();
         $owner = $this->owner;
         $ownerList = $this->getOwnerList();
-        count($fileList) ? $result['file'] = $fileList : null;
-        count($contentList) ? $result['content'] = $contentList : null;
+        count($fileList) ? $result['file'] = $this->formatMorphActionArray($fileList) : null;
+        count($contentList) ? $result['content'] = $this->formatMorphActionArray($contentList) : null;
         count($ownerList) ? $result[$owner] = $ownerList : null;
         return $result;
+    }
+
+    public function formatMorphActionArray($list, $action = 'create')
+    {
+        return [
+            'updated' => $action === $this->updateAction ? is_array($list) ? $list : [$list] : [],
+            'attached' => $action === $this->createAction ? is_array($list) ? $list : [$list] : [],
+            'detached' => $action === $this->deleteAction ? is_array($list) ? $list : [$list] : []
+        ];
     }
 }

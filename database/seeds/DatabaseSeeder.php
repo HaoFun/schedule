@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(IssueUserTableSeeder::class);
         $this->call(ProjectTrackerTableSeeder::class);
         $this->call(IssueTrackerTableSeeder::class);
+        $this->call(TodosTableSeeder::class);
     }
 }

@@ -13,11 +13,11 @@ class ProjectController extends Controller
 
     const indexFields = ['title'];
     const createFields = [
-        'title', 'status', 'priority', 'remark', 'created_date', 'due_date', 'created_by',
+        'title', 'status', 'priority', 'remark', 'start_date', 'due_date', 'created_by',
         'updated_by'
     ];
     const updateFields = [
-        'title', 'status', 'priority', 'remark', 'created_date', 'due_date', 'completed_date',
+        'title', 'status', 'priority', 'remark', 'start_date', 'due_date', 'completed_date',
         'release_date', 'created_by', 'updated_by'
     ];
 
@@ -52,8 +52,8 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, $id)
     {
         return $this->service->modify(array_only($request->all(), self::updateFields), $id) ?
-            $this->success($this->makeMessage('common.modify_success', trans('transformer.project'))) :
-            $this->error($this->makeMessage('common.modify_error', trans('transformer.project')));
+            $this->success($this->makeMessage('common.modify_success', trans('transformer.project'), $id)) :
+            $this->error($this->makeMessage('common.modify_error', trans('transformer.project'), $id));
     }
 
     public function destroy($id)

@@ -10,9 +10,25 @@ class ProjectObserver
 {
     use HistoryTrait, MakeRelationDataTrait;
 
+    const finishedStatus = 4;
+
+    public function creating(Project $project)
+    {
+        if (!$project->start_date) {
+            $project->start_date = now();
+        }
+    }
+
     public function created(Project $project)
     {
         $this->doAction($project, 'create');
+    }
+
+    public function updating(Project $project)
+    {
+        if ($project->status === trans('transformer.project_status_list')[self::finishedStatus]) {
+            $project->release_date = now();
+        }
     }
 
     public function updated(Project $project)

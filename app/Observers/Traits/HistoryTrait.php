@@ -21,14 +21,20 @@ trait HistoryTrait
     public function makeHistoryLog($model, $modify)
     {
         $historyLog = [];
-        $modelDirty = $model->getDirty();
-        $morphDirty = $this->getMorphDirty();
-        if (count($modelDirty)) {
-            foreach ($modelDirty as $key => $value) {
-                $historyLog[$key] = [$model->getOriginal($key), $value];
+        try {
+            $modelDirty = $model->getDirty();
+            $morphDirty = $this->getMorphDirty();
+            if (count($modelDirty)) {
+                foreach ($modelDirty as $key => $value) {
+                    $historyLog[$key] = [$model->getOriginal($key), $value];
+                }
             }
+            count($morphDirty) ? $historyLog = array_merge($historyLog, $morphDirty) : null;
+        } catch (\Exception $e) {
+
+        } finally {
+            $historyLog = $modify ? array_merge($historyLog, $modify) : $historyLog;
+            return $historyLog;
         }
-        count($morphDirty) ? $historyLog = array_merge($historyLog, $morphDirty) : null;
-        return $historyLog;
     }
 }

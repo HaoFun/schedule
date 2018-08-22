@@ -35,15 +35,15 @@ class DepartmentController extends Controller
     {
         $department = $this->service->show($id);
         return $department ?
-            $this->success($department) :
+            $this->successWith(['department' => $department]) :
             $this->error($this->makeMessage('common.not_found_id', trans('transformer.department'), $id));
     }
 
     public function update(DepartmentRequest $request, $id)
     {
         return $this->service->modify(array_only($request->all(), self::defaultFields), $id) ?
-            $this->success($this->makeMessage('common.modify_success', trans('transformer.department'))) :
-            $this->error($this->makeMessage('common.modify_error', trans('transformer.department')));
+            $this->success($this->makeMessage('common.modify_success', trans('transformer.department'), $id)) :
+            $this->error($this->makeMessage('common.modify_error', trans('transformer.department'), $id));
     }
 
     public function destroy($id)

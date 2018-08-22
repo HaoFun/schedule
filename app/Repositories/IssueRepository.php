@@ -32,8 +32,8 @@ class IssueRepository extends BaseRepository
                 return $q->whereHas('types', function ($q) {
                     return $q->where('type_name', request('type_name'));
                 });
-            })->when(request('created_date_start'), function ($q) {
-                return $q->whereBetween('created_date', [request('created_date_start'), request('created_date_end')]);
+            })->when(request('start_date_start'), function ($q) {
+                return $q->whereBetween('start_date', [request('start_date_start'), request('start_date_end')]);
             })->when(request('due_date_start'), function ($q) {
                 return $q->whereBetween('due_date', [request('due_date_start'), request('due_date_end')]);
             })->when(request('completed_date_start'), function ($q) {

@@ -2,11 +2,14 @@
 
 return [
     'user' => 'User',
+    'type' => 'Type',
     'content' => 'Content',
     'tracker' => 'Tracker',
     'department' => 'Department',
     'project' => 'Project',
     'issue' => 'Issue',
+    'todo' => 'Todo',
+
     'project_status_list' => [
         1 => '新建立', 2 => '提案中', 3 => '實做中', 4 => '已結案'
     ],

@@ -35,15 +35,15 @@ class TrackerController extends Controller
     {
         $tracker = $this->service->show($id);
         return $tracker ?
-            $this->success($tracker) :
+            $this->successWith(['tracker' => $tracker]) :
             $this->error($this->makeMessage('common.not_found_id', trans('transformer.tracker'), $id));
     }
 
     public function update(TrackerRequest $request, $id)
     {
         return $this->service->modify(array_only($request->all(), self::defaultFields), $id) ?
-            $this->success($this->makeMessage('common.modify_success', trans('transformer.tracker'))) :
-            $this->error($this->makeMessage('common.modify_error', trans('transformer.tracker')));
+            $this->success($this->makeMessage('common.modify_success', trans('transformer.tracker'), $id)) :
+            $this->error($this->makeMessage('common.modify_error', trans('transformer.tracker'), $id));
     }
 
     public function destroy($id)

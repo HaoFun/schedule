@@ -12,14 +12,17 @@
 */
 
 Route::namespace('Api')->group(function ($route) {
-    $route->resource('departments', 'DepartmentController');
-    $route->resource('trackers', 'TrackerController');
+    $route->resource('departments', 'DepartmentController', ['only' => ['index', 'show', 'store', 'update', 'delete']]);
+    $route->resource('types', 'TypeController', ['only' => ['index', 'show', 'store', 'update', 'delete']]);
+    $route->resource('trackers', 'TrackerController', ['only' => ['index', 'show', 'store', 'update', 'delete']]);
     $route->get('projects/search', 'ProjectController@search')->name('projects.search');
     $route->get('projects/{project}/history', 'ProjectController@history')->name('projects.history');
-    $route->resource('projects', 'ProjectController');
+    $route->resource('projects', 'ProjectController', ['only' => ['index', 'show', 'store', 'update', 'delete']]);
     $route->get('issues/search', 'IssueController@search')->name('issues.search');
     $route->get('issues/{issue}/history', 'IssueController@history')->name('issues.history');
-    $route->resource('issues', 'IssueController');
-    $route->get('contents/index');
-    $route->resource('contents', 'ContentController', ['only' => ['show', 'edit', 'update', 'destroy']]);
+    $route->resource('issues', 'IssueController', ['only' => ['index', 'show', 'store', 'update', 'delete']]);
+    $route->resource('contents', 'ContentController', ['only' => ['show', 'update', 'delete']]);
+    $route->put('todos/{todo}/toggle', 'TodoController@toggle')->name('todos.toggle');
+    $route->get('todos/search', 'TodoController@search')->name('todos.search');
+    $route->resource('todos', 'TodoController', ['only' => ['show', 'store', 'update', 'delete']]);
 });
