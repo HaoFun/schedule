@@ -45,8 +45,8 @@ class IssueController extends Controller
     public function store(IssueRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::createFields)) ?
-            $this->success($this->makeMessage('common.create_success', trans('transformer.issue'))) :
-            $this->error($this->makeMessage('common.create_error', trans('transformer.issue')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.issue')), 201) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.issue')), 400);
     }
 
     public function update(IssueRequest $request, $id)
@@ -59,7 +59,7 @@ class IssueController extends Controller
     public function destroy($id)
     {
         return $this->service->delete($id) ?
-            $this->success($this->makeMessage('common.delete_success', trans('transformer.issue'), $id)) :
+            $this->success($this->makeMessage('common.delete_success', trans('transformer.issue'), $id), 204) :
             $this->error($this->makeMessage('common.delete_error', trans('transformer.issue'), $id));
     }
 }

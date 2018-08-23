@@ -27,8 +27,8 @@ class DepartmentController extends Controller
     public function store(DepartmentRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::defaultFields)) ?
-            $this->success($this->makeMessage('common.create_success', trans('transformer.department'))) :
-            $this->error($this->makeMessage('common.create_error', trans('transformer.department')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.department')), 201) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.department')), 400);
     }
 
     public function show($id)
@@ -50,7 +50,7 @@ class DepartmentController extends Controller
     {
         $response = $this->service->delete($id);
         return $response['status'] === true ?
-            $this->success($response['message']) :
-            $this->error($response['message']);
+            $this->success($response['message'], $response['code']) :
+            $this->error($response['message'], $response['code']);
     }
 }

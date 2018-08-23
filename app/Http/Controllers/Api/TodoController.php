@@ -40,8 +40,8 @@ class TodoController extends Controller
     {
         $result = $this->service->create(array_only($request->all(), self::defaultFields));
         return $result ?
-            $this->success($this->makeMessage('common.create_success', trans('transformer.todo'))) :
-            $this->error($this->makeMessage('common.create_error', trans('transformer.todo')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.todo')), 201) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.todo')), 400);
     }
 
     public function update(TodoRequest $request, $id)

@@ -8,10 +8,12 @@ class MergeRequestMiddleware
 {
     public function handle($request, Closure $next)
     {
-        $request->merge([
-            'created_by' => 1,
-            'updated_by' => 1
-        ]);
+        if ($request->route()->getName() === 'auth.login') {
+            $request->merge([
+                'client_id' => config('oauth.schedule_id'),
+                'client_secret' => config('oauth.schedule_secret')
+            ]);
+        }
         return $next($request);
     }
 }

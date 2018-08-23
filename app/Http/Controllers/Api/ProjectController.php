@@ -45,8 +45,8 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::createFields)) ?
-            $this->success($this->makeMessage('common.create_success', trans('transformer.project'))) :
-            $this->error($this->makeMessage('common.create_error', trans('transformer.project')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.project')), 201) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.project')), 400);
     }
 
     public function update(ProjectRequest $request, $id)
@@ -59,7 +59,7 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         return $this->service->delete($id) ?
-            $this->success($this->makeMessage('common.delete_success', trans('transformer.project'), $id)) :
+            $this->success($this->makeMessage('common.delete_success', trans('transformer.project'), $id), 204) :
             $this->error($this->makeMessage('common.delete_error', trans('transformer.project'), $id));
     }
 }

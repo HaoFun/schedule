@@ -27,8 +27,8 @@ class TrackerController extends Controller
     public function store(TrackerRequest $request)
     {
         return $this->service->create(array_only($request->all(), self::defaultFields)) ?
-            $this->success($this->makeMessage('common.create_success', trans('transformer.tracker'))) :
-            $this->error($this->makeMessage('common.create_error', trans('transformer.tracker')));
+            $this->success($this->makeMessage('common.create_success', trans('transformer.tracker')), 201) :
+            $this->error($this->makeMessage('common.create_error', trans('transformer.tracker')), 400);
     }
 
     public function show($id)
@@ -50,7 +50,7 @@ class TrackerController extends Controller
     {
         $response = $this->service->delete($id);
         return $response['status'] === true ?
-            $this->success($response['message']) :
-            $this->error($response['message']);
+            $this->success($response['message'], $response['code']) :
+            $this->error($response['message'], $response['code']);
     }
 }

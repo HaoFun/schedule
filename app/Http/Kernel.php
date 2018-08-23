@@ -2,7 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckJsonMiddleware;
 use App\Http\Middleware\MergeRequestMiddleware;
+use App\Http\Middleware\WithOauthMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -40,8 +42,8 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:60,1',
+            'check.json',
             'bindings',
-            'merge.request'
         ],
     ];
 
@@ -62,5 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'merge.request' => MergeRequestMiddleware::class,
+        'with.oauth' => WithOauthMiddleware::class,
+        'check.json' => CheckJsonMiddleware::class,
     ];
 }

@@ -36,7 +36,7 @@ class ContentController extends Controller
     {
         $result = $this->service->delete($id);
         return $result ?
-            $this->success($this->makeMessage('common.delete_success', trans('transformer.content'), $id)) :
+            $this->success($this->makeMessage('common.delete_success', trans('transformer.content'), $id), 204) :
             $this->error($this->makeMessage('common.delete_error', trans('transformer.content'), $id));
     }
 }

@@ -4,11 +4,12 @@ namespace App\Handlers;
 
 trait MakeResponseTransHandler
 {
-    public function makeResponse($status, $message)
+    public function makeResponse($status, $message, $code = 200)
     {
         return [
             'status' => $status,
-            'message' => $message
+            'message' => $message,
+            'code' => $code
         ];
     }
 
