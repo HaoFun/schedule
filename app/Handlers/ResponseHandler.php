@@ -17,40 +17,39 @@ trait ResponseHandler
             $status : 'error';
     }
 
-    public function success($message = 'success', $code = 200)
+    public function success($message = false, $code = 200)
     {
         return $this->transformerResponse($message, $code);
     }
 
-    public function successWith($data = [], $message = 'success', $code = 200)
+    public function successWith($data = [], $message = false, $code = 200)
     {
         return $this->transformerResponse($message, $code, $data);
     }
 
-    public function error($message = 'error', $code = 404)
+    public function error($message = false, $code = 404)
     {
         $this->setStatus('error');
         return $this->transformerResponse($message, $code);
     }
 
-    public function errorWith($data = [], $message = 'error', $code = 404)
+    public function errorWith($data = [], $message = false, $code = 404)
     {
         $this->setStatus('error');
         return $this->transformerResponse($message, $code, $data);
     }
 
-    public function makeDefaultResponse($message, $code)
+    public function makeDefaultResponse($message = false)
     {
-        return [
-            'code' => $code,
-            'message' => $message,
-            'status' => $this->getStatus(),
-        ];
+        $defaultResponse = ['status' => $this->getStatus()];
+        return $message ? array_merge($defaultResponse, [
+            'message' => $message
+        ]) : $defaultResponse;
     }
 
     public function transformerResponse($message, $code, $data = [])
     {
-        $response = $this->makeDefaultResponse($message, $code);
+        $response = $this->makeDefaultResponse($message);
         $response = count($data) ?
             array_merge($response, ['data' => $data]) :
             $response;

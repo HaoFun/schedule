@@ -43,7 +43,10 @@ class AuthorizationController extends Controller
 
     public function show($id)
     {
-
+        $user = $this->service->find($id);
+        return $user ?
+            $this->successWith($user) :
+            $this->error($this->makeMessage('common.not_found_id'), trans('transformer.user'), $id);
     }
 
     public function store(AuthorizationRequest $originRequest, AuthorizationServer $server, ServerRequestInterface $serverRequest)
