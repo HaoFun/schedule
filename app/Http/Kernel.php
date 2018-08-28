@@ -63,7 +63,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'merge.request' => MergeRequestMiddleware::class,
         'with.oauth' => WithOauthMiddleware::class,
         'check.json' => CheckJsonMiddleware::class,
     ];

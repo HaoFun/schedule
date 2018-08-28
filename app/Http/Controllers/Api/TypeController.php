@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\TypeRequest;
 use App\Services\TypeService;
 
-class TypeController extends Controller
+class TypeController extends BaseApiController
 {
     protected $service;
 

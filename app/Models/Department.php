@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Department extends Model
+class Department extends BaseModel
 {
     protected $fillable = [
         'department_name', 'department_info'

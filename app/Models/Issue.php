@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Issue extends Model
+class Issue extends BaseModel
 {
     protected $fillable = [
         'project_id', 'title', 'status', 'priority', 'remark', 'type_id',
         'start_date', 'due_date', 'completed_date', 'release_date',
         'created_by', 'updated_by', 'updated_at'
+    ];
+
+    protected $dates = [
+        'start_date', 'due_date', 'completed_date', 'release_date'
     ];
 
     public function getStatusAttribute($value)

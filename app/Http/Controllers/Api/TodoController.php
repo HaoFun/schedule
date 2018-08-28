@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\TodoRequest;
 use App\Http\Resources\TodoResourceCollection;
 use App\Services\TodoService;
 
-class TodoController extends Controller
+class TodoController extends BaseApiController
 {
     protected $service;
 

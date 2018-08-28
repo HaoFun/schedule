@@ -2,8 +2,12 @@
 
 namespace App\Services;
 
+use App\Handlers\ResponseHandler;
+
 abstract class BaseService implements ServiceInterface
 {
+    use ResponseHandler;
+
     protected $repository;
 
     public function index($column = ['*'])

@@ -2,13 +2,10 @@
 
 namespace App\Services;
 
-use App\Handlers\MakeResponseTransHandler;
 use App\Repositories\TypeRepository;
 
 class TypeService extends BaseService
 {
-    use MakeResponseTransHandler;
-
     protected $repository;
 
     public function __construct(TypeRepository $repository)

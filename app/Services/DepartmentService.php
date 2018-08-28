@@ -2,13 +2,10 @@
 
 namespace App\Services;
 
-use App\Handlers\MakeResponseTransHandler;
 use App\Repositories\DepartmentRepository;
 
 class DepartmentService extends BaseService
 {
-    use MakeResponseTransHandler;
-
     protected $repository;
 
     public function __construct(DepartmentRepository $repository)

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Content extends Model
+class Content extends BaseModel
 {
     protected $fillable = [
         'contentable_id', 'contentable_type', 'content',

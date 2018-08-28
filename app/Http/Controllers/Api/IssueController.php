@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\IssueRequest;
 use App\Http\Resources\IssueResourceCollection;
 use App\Services\IssueService;
 
-class IssueController extends Controller
+class IssueController extends BaseApiController
 {
     protected $service;
 

@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Project extends Model
+class Project extends BaseModel
 {
     protected $fillable = [
         'title', 'status', 'priority', 'remark', 'start_date',
         'due_date', 'completed_date', 'release_date', 'created_by',
         'updated_by', 'updated_at'
+    ];
+
+    protected $dates = [
+        'start_date', 'due_date', 'completed_date', 'release_date'
     ];
 
     public function getPriorityAttribute($value)

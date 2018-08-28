@@ -30,18 +30,21 @@ class User extends Authenticatable
         'password', 'remember_token', 'api_token'
     ];
 
+    protected $dates = [
+        'password_changed_at'
+    ];
+
     public function findForPassport($username)
     {
         filter_var($username, FILTER_VALIDATE_EMAIL) ?
             $credentials['email'] = $username :
             $credentials['account'] = $username;
-
-        return self::where($credentials)->first();
+        return self::where($credentials)->where('status', 1)->first();
     }
 
     public function setPasswordAttribute($password)
     {
-        return Hash::make($password);
+        return $this->attributes['password'] = Hash::make($password);
     }
 
     public function department()

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Todo extends Model
+class Todo extends BaseModel
 {
     protected $fillable = [
         'user_id', 'is_done', 'todo', 'start_date', 'due_date'
+    ];
+
+    protected $dates = [
+        'start_date', 'due_date'
     ];
 
     public function user()

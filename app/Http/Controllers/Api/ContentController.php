@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ContentRequest;
 use App\Services\ContentService;
 
-class ContentController extends Controller
+class ContentController extends BaseApiController
 {
     protected $service;
     const updateFields = ['content', 'updated_by'];

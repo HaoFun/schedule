@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentRequest;
 use App\Services\DepartmentService;
 
-class DepartmentController extends Controller
+class DepartmentController extends BaseApiController
 {
     protected $service;
 

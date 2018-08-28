@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\ProjectResourceCollection;
 use App\Services\ProjectService;
 
-class ProjectController extends Controller
+class ProjectController extends BaseApiController
 {
     protected $service;
 

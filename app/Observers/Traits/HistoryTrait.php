@@ -8,7 +8,7 @@ trait HistoryTrait
 {
     public function transformerHistory($action = 'create', Model $model, $modify = false)
     {
-        $historyLog = $this->makeHistoryLog($model, $modify);
+        $historyLog = $this->makeHistoryLog($action, $model, $modify);
         return $historyLog ?
             [
                 'action' => $action,
@@ -18,7 +18,7 @@ trait HistoryTrait
             false;
     }
 
-    public function makeHistoryLog($model, $modify)
+    public function makeHistoryLog($action, $model, $modify)
     {
         $historyLog = [];
         try {
@@ -26,14 +26,19 @@ trait HistoryTrait
             $morphDirty = $this->getMorphDirty();
             if (count($modelDirty)) {
                 foreach ($modelDirty as $key => $value) {
-                    $historyLog[$key] = [$model->getOriginal($key), $value];
+                    $historyLog[$key] = $action === 'create' ?
+                        [$value] :
+                        [$model->getOriginal($key), $value];
                 }
             }
-            count($morphDirty) ? $historyLog = array_merge($historyLog, $morphDirty) : null;
+            count($morphDirty) ?
+                $historyLog = array_merge($historyLog, $morphDirty) :
+                null;
         } catch (\Exception $e) {
 
         } finally {
-            $historyLog = $modify ? array_merge($historyLog, $modify) : $historyLog;
+            $historyLog = $modify ?
+                array_merge($historyLog, $modify) : $historyLog;
             return $historyLog;
         }
     }

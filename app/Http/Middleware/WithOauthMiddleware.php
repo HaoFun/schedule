@@ -25,6 +25,9 @@ class WithOauthMiddleware
                 ]);
                 break;
             }
+            default : {
+                break;
+            }
         }
         return $next($request);
     }

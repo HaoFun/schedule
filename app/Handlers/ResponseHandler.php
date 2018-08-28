@@ -4,19 +4,6 @@ namespace App\Handlers;
 
 trait ResponseHandler
 {
-    protected $status = 'success';
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($status = 'success')
-    {
-        $this->status = $status === 'success' ?
-            $status : 'error';
-    }
-
     public function success($message = false, $code = 200)
     {
         return $this->transformerResponse($message, $code);
@@ -29,19 +16,17 @@ trait ResponseHandler
 
     public function error($message = false, $code = 404)
     {
-        $this->setStatus('error');
         return $this->transformerResponse($message, $code);
     }
 
     public function errorWith($data = [], $message = false, $code = 404)
     {
-        $this->setStatus('error');
         return $this->transformerResponse($message, $code, $data);
     }
 
     public function makeDefaultResponse($message = false)
     {
-        $defaultResponse = ['status' => $this->getStatus()];
+        $defaultResponse = [];
         return $message ? array_merge($defaultResponse, [
             'message' => $message
         ]) : $defaultResponse;
@@ -62,5 +47,19 @@ trait ResponseHandler
             'Content-Type' => 'application/json; charset=utf-8'
         ]);
         return response()->json($data, $code, $header, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function makeResponse($status, $message, $code = 200)
+    {
+        return [
+            'status' => $status,
+            'message' => $message,
+            'code' => $code
+        ];
+    }
+
+    public function makeMessage($trans, ...$attribute)
+    {
+        return sprintf(trans($trans), ...$attribute);
     }
 }

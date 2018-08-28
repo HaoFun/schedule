@@ -18,9 +18,7 @@ class ProjectResourceCollection extends ResourceCollection
     public function with($request)
     {
         return [
-            'code' => 200,
             'message' => 'success',
-            'status' => 'success'
         ];
     }
 }
