@@ -11,6 +11,7 @@ class IssueResource extends JsonResource
         switch ($request->route()->getName()) {
             case 'issues.index' : {
                 return [
+                    'id' => $this->id,
                     'title' => $this->title
                 ];
             }
@@ -30,11 +31,12 @@ class IssueResource extends JsonResource
                     'assignee' => data_get($historyLog, 'assignee', [])
                 ];
             }
-            default : {
+            case 'issues.show' : {
                 return [
                     'id' => $this->id,
                     'title' => $this->title,
                     'status' => $this->status,
+                    'type' => optional($this->types)->type_name,
                     'priority' => $this->priority,
                     'remark' => $this->remark,
                     'start_date' => $this->start_date,
@@ -48,6 +50,18 @@ class IssueResource extends JsonResource
                     'tracker' => $this->tracker->pluck('tracker_name'),
                     'created_by' => optional($this->created_by_user)->account,
                     'updated_by' => optional($this->updated_by_user)->account
+                ];
+            }
+            default : {
+                return [
+                    'id' => $this->id,
+                    'title' => $this->title,
+                    'status' => $this->status,
+                    'type' => optional($this->types)->type_name,
+                    'priority' => $this->priority,
+                    'assignee' => optional($this->user)->pluck('account'),
+                    'tracker' => optional($this->tracker)->pluck('tracker_name'),
+                    'updated_at' => optional($this->updated_at)->toDateTimeString()
                 ];
             }
         }

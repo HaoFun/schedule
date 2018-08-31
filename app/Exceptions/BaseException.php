@@ -9,7 +9,7 @@ class BaseException extends Exception
 {
     public function report()
     {
-        $this->saveLog();
+        $this->saveFailedLog();
         $response = $this->makeResponse();
         return response()->json($response);
     }
@@ -24,11 +24,11 @@ class BaseException extends Exception
         ];
     }
 
-    protected function saveLog()
+    protected function saveFailedLog()
     {
-        Log::channel('error_daily')->debug('Error Log Start ==========================');
+        Log::channel('error_daily')->debug('Failed Log Start ==========================');
         Log::channel('error_daily')->debug($this->getCode());
         Log::channel('error_daily')->debug($this->getMessage());
-        Log::channel('error_daily')->debug('Error Log End ============================');
+        Log::channel('error_daily')->debug('Failed Log End ============================');
     }
 }

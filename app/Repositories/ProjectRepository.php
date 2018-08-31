@@ -12,10 +12,10 @@ class ProjectRepository extends BaseRepository
     public function search($perpage, $fields = ['*'])
     {
         return $this->model->select($fields)
-            ->with('user:account', 'tracker:tracker_name', 'created_by_user:account', 'updated_by_user:account')
+            ->with('user:account', 'tracker:tracker_name', 'created_by_user:id,account', 'updated_by_user:id,account')
             ->withCount('files', 'contents', 'issues')
             ->when(request('title'), function ($q) {
-            return $q->where('title', request('title'). '%');
+            return $q->where('title', 'LIKE' ,request('title'). '%');
         })->when(request('status'), function ($q) {
             return $q->where('status', request('status'));
         })->when(request('priority'), function ($q) {
@@ -32,7 +32,8 @@ class ProjectRepository extends BaseRepository
             return $q->whereBetween('completed', [request('completed_date_start'), request('completed_date_end')]);
         })->when(request('release_date_start'), function ($q) {
             return $q->whereBetween('release_date', [request('release_date_start'), request('release_date_end')]);
-        })->paginate($perpage);
+        })->paginate($perpage)->setPath(route('projects.search'))
+            ->appends(request()->except(['page', 'created_by', 'updated_by']));
     }
 
     public function historyBy($id)

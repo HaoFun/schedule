@@ -58,18 +58,19 @@ class Issue extends BaseModel
 
     public function types()
     {
-        return $this->belongsTo(Type::class, 'type_id')->select('type_name');
+        return $this->belongsTo(Type::class, 'type_id')
+            ->select('id', 'type_name');
     }
 
     public function created_by_user()
     {
         return $this->belongsTo(User::class, 'created_by')
-            ->select('account');
+            ->select('id', 'account');
     }
 
     public function updated_by_user()
     {
         return $this->belongsTo(User::class, 'updated_by')
-            ->select('account');
+            ->select('id', 'account');
     }
 }

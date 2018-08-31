@@ -30,6 +30,11 @@ abstract class BaseService implements ServiceInterface
         return $this->repository->find($id, $column);
     }
 
+    public function showWith($with, $id, $column = ['*'])
+    {
+        return $this->repository->findWith($with, $id, $column);
+    }
+
     public function modify(array $data, $attribute)
     {
         return $this->repository->update($data, $attribute);

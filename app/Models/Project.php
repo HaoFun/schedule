@@ -16,7 +16,7 @@ class Project extends BaseModel
 
     public function getPriorityAttribute($value)
     {
-        return trans('transformer.priority.' . $value);
+        return trans('transformer.priority_list.' . $value);
     }
 
     public function getStatusAttribute($value)
@@ -32,7 +32,7 @@ class Project extends BaseModel
 
     public function issues()
     {
-        return $this->hasOne(Issue::class, 'project_id');
+        return $this->hasMany(Issue::class, 'project_id');
     }
 
     public function tracker()

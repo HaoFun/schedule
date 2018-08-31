@@ -10,8 +10,6 @@ class IssueObserver
 {
     use HistoryTrait, MakeRelationDataTrait;
 
-    const finishedStatus = 4;
-
     public function creating(Issue $issue)
     {
         if (!$issue->start_date) {
@@ -26,7 +24,8 @@ class IssueObserver
 
     public function updating(Issue $issue)
     {
-        if ($issue->status === trans('transformer.issue_status_list')[self::finishedStatus]) {
+        if ($issue->status === trans('transformer.issue_status_list')[
+            config('schedule_config.issue_finished')]) {
             $issue->release_date = now();
         }
     }
@@ -38,11 +37,11 @@ class IssueObserver
 
     public function deleted(Issue $issue)
     {
-        $issue->tracker()->delete();
+        $issue->tracker()->detach();
         $issue->contents()->delete();
         $issue->histories()->delete();
         $issue->files()->delete();
-        $issue->user()->delete();
+        $issue->user()->detach();
     }
 
     public function doAction($issue, $type)
@@ -50,6 +49,7 @@ class IssueObserver
         $this->makeContent($issue);
         $this->makeFile($issue);
         $this->makeOwner($issue, 'assignee');
+        $this->makeTracker($issue);
         if ($historyLog = $this->transformerHistory($type, $issue)) {
             $issue->histories()->create($historyLog);
         }

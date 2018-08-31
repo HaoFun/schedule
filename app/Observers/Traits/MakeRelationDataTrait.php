@@ -11,6 +11,7 @@ trait MakeRelationDataTrait
     protected $contentFields = ['content', 'created_by', 'updated_by'];
     protected $fileFields = ['file_name', 'file_path', 'created_by', 'updated_by'];
     protected $content = [];
+    protected $tracker = [];
     protected $file = [];
     protected $owner = 'manager';
     protected $manager = [];
@@ -29,6 +30,14 @@ trait MakeRelationDataTrait
         if (request('content')) {
             $contents = $model->contents()->create(array_only(request()->all(), $this->contentFields));
             $this->content = [$contents->id];
+        }
+    }
+
+    public function makeTracker($model)
+    {
+        if (request('tracker')) {
+            $trackers = $model->tracker()->sync(request('tracker'));
+            $this->tracker = $trackers;
         }
     }
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Content;
+use Faker\Generator as Faker;
 
 class ContentTableSeeder extends Seeder
 {

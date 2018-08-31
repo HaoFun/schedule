@@ -35,7 +35,7 @@ trait ResponseHandler
     public function transformerResponse($message, $code, $data = [])
     {
         $response = $this->makeDefaultResponse($message);
-        $response = count($data) ?
+        $response = $data ?
             array_merge($response, ['data' => $data]) :
             $response;
         return $this->respond($response, $code);

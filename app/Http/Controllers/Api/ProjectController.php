@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\ProjectRequest;
+use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectResourceCollection;
 use App\Services\ProjectService;
 
@@ -10,7 +11,7 @@ class ProjectController extends BaseApiController
 {
     protected $service;
 
-    const indexFields = ['title'];
+    const indexFields = ['id', 'title'];
     const createFields = [
         'title', 'status', 'priority', 'remark', 'start_date', 'due_date', 'created_by',
         'updated_by'
@@ -39,6 +40,24 @@ class ProjectController extends BaseApiController
     public function index()
     {
         return new ProjectResourceCollection($this->service->index(self::indexFields));
+    }
+
+    public function show($id)
+    {
+        $project = $this->service->showWith([
+            'user:account',
+            'tracker:tracker_name',
+            'issues:id,project_id,title,updated_at,type_id,status,priority',
+            'issues.user',
+            'issues.tracker',
+            'issues.types',
+            'contents',
+            'files',
+            'updated_by_user:id,account'
+        ], $id);
+        return $project ?
+            $this->successWith(new ProjectResource($project)) :
+            $this->error($this->makeMessage('common.not_found_id', trans('transformer.project'), $id));
     }
 
     public function store(ProjectRequest $request)

@@ -113,7 +113,15 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
-    'manager_exists' => 'Not found manager.',
+    'manager_exists'      => 'Not found manager id : %s.',
+    'assignee_exists'     => 'Not found assignee id : %s.',
+    'tracker_exists'      => 'Not found tracker id : %s.',
+    'tracker_name_unique' => 'Tracker_name : %s has already been taken.',
+    'type_exists'         => 'Not found type id : %s.',
+    'department_exists'   => 'Not found department id : %s',
+    'status_exists'       => 'Not found status key : %s',
+    'priority_exists'     => 'Not found priority key : %s',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

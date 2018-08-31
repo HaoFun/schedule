@@ -12,7 +12,7 @@ class IssueRepository extends BaseRepository
     public function search($perpage, $fields = ['*'])
     {
         return $this->model->select($fields)
-            ->with('user:account', 'tracker:tracker_name', 'created_by_user:account', 'updated_by_user:account', 'project:title', 'types:type_name')
+            ->with('user:account', 'tracker:tracker_name', 'created_by_user:account', 'updated_by_user:account', 'project:title')
             ->withCount('files', 'contents')
             ->when(request('title'), function ($q) {
                 return $q->where('title', request('title') . '%');
@@ -28,10 +28,8 @@ class IssueRepository extends BaseRepository
                 return $q->whereHas('user', function ($q) {
                     return $q->whereIn('user_id', request('assignee'));
                 });
-            })->when(request('type_name'), function ($q) {
-                return $q->whereHas('types', function ($q) {
-                    return $q->where('type_name', request('type_name'));
-                });
+            })->when(request('type_id'), function ($q) {
+                return $q->where('type_id', request('type_id'));
             })->when(request('start_date_start'), function ($q) {
                 return $q->whereBetween('start_date', [request('start_date_start'), request('start_date_end')]);
             })->when(request('due_date_start'), function ($q) {

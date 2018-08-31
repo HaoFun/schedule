@@ -10,11 +10,4 @@ class TodoResourceCollection extends ResourceCollection
     {
         return ['data' => [ 'todos' => TodoResource::collection($this->collection)]];
     }
-
-    public function with($request)
-    {
-        return [
-            'message' => 'success',
-        ];
-    }
 }

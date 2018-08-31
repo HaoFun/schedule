@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckJsonMiddleware;
 use App\Http\Middleware\MergeRequestMiddleware;
+use App\Http\Middleware\WithAuthMiddleware;
 use App\Http\Middleware\WithOauthMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'with.oauth' => WithOauthMiddleware::class,
         'check.json' => CheckJsonMiddleware::class,
+        'with.auth' => WithAuthMiddleware::class,
     ];
 }

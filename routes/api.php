@@ -10,7 +10,6 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::group(['namespace' => 'Api'], function ($route) {
     $route->post('auth/register', 'AuthorizationController@signUp')->name('auth.register');
 
@@ -19,7 +18,7 @@ Route::group(['namespace' => 'Api'], function ($route) {
         $route->put('auth/refresh', 'AuthorizationController@refresh')->name('auth.refresh');
     });
 
-    $route->group(['middleware' => 'auth:api'], function ($route) {
+    $route->group(['middleware' => ['auth:api', 'with.auth']], function ($route) {
         $route->resource('departments', 'DepartmentController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
 
         $route->resource('types', 'TypeController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);

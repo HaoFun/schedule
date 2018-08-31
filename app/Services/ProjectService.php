@@ -26,9 +26,10 @@ class ProjectService extends BaseService
     public function modify(array $data, $attribute)
     {
         if ($project = $this->repository->find($attribute)) {
-            return parent::modify(array_merge($data, [
-                'updated_at' => now()
-            ]), $project);
+            if (request('content') || request('file')) {
+                $data = array_merge($data, ['updated_at' => now()]);
+            }
+            return parent::modify($data, $project);
         }
         return false;
     }

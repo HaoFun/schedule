@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckModelUnique;
+
 class DepartmentRequest extends BaseRequest
 {
     public function rules()
@@ -10,7 +12,8 @@ class DepartmentRequest extends BaseRequest
             case 'departments.store' :
             case 'departments.update' : {
                 return [
-                    'department_name' => 'required|max:10',
+                    'department_name' => ['required', 'max:10',
+                        new CheckModelUnique('department', 'department_name')],
                     'department_info' => 'nullable'
                 ];
             }

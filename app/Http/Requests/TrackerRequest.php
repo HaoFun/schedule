@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckModelUnique;
+
 class TrackerRequest extends BaseRequest
 {
     public function rules()
@@ -10,7 +12,8 @@ class TrackerRequest extends BaseRequest
             case 'trackers.store' :
             case 'trackers.update' : {
                 return [
-                    'tracker_name' => 'required|max:10',
+                    'tracker_name' => ['required', 'max:10',
+                        new CheckModelUnique('tracker', 'tracker_name')],
                     'tracker_info' => 'nullable'
                 ];
             }

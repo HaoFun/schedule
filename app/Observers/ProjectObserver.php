@@ -10,8 +10,6 @@ class ProjectObserver
 {
     use HistoryTrait, MakeRelationDataTrait;
 
-    const finishedStatus = 4;
-
     public function creating(Project $project)
     {
         if (!$project->start_date) {
@@ -26,7 +24,8 @@ class ProjectObserver
 
     public function updating(Project $project)
     {
-        if ($project->status === trans('transformer.project_status_list')[self::finishedStatus]) {
+        if ($project->status === trans('transformer.project_status_list')[
+            config('schedule_config.project_finished')]) {
             $project->release_date = now();
         }
     }
@@ -39,11 +38,11 @@ class ProjectObserver
     public function deleted(Project $project)
     {
         $project->issues()->delete();
-        $project->tracker()->delete();
+        $project->tracker()->detach();
         $project->contents()->delete();
         $project->histories()->delete();
         $project->files()->delete();
-        $project->user()->delete();
+        $project->user()->detach();
     }
 
     public function doAction($project, $type)
@@ -51,6 +50,7 @@ class ProjectObserver
         $this->makeContent($project);
         $this->makeFile($project);
         $this->makeOwner($project, 'manager');
+        $this->makeTracker($project);
         if ($historyLog = $this->transformerHistory($type, $project)) {
             $project->histories()->create($historyLog);
         }

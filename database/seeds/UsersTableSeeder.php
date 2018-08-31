@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
             'account' => 'Hao',
             'name' => 'Hao',
             'email' => 'howhow926@gmail.com',
-            'password' => '123123',
+            'password' => 123123,
             'department_id' => 1,
             'api_token' => str_random(64)
         ]);
@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'account' => 'Tone',
             'name' => 'Tone',
             'email' => 'tone@gmail.com',
-            'password' => '123123',
+            'password' => 123123,
             'department_id' => 1,
             'api_token' => str_random(64)
         ]);

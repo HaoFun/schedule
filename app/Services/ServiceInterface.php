@@ -12,6 +12,8 @@ interface ServiceInterface
 
     public function show($id, $column = ['*']);
 
+    public function showWith($with, $id, $column = ['*']);
+
     public function modify(array $data, $id);
 
     public function delete($id);

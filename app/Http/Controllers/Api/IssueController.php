@@ -10,7 +10,7 @@ class IssueController extends BaseApiController
 {
     protected $service;
 
-    const indexFields = ['title'];
+    const indexFields = ['id', 'title'];
     const createFields = [
         'project_id', 'title', 'status', 'priority', 'remark', 'type_id', 'start_date', 'due_date',
         'created_by', 'updated_by'
@@ -38,7 +38,7 @@ class IssueController extends BaseApiController
 
     public function index()
     {
-        return new IssueResourceCollection($this->service->index());
+        return new IssueResourceCollection($this->service->index(self::indexFields));
     }
 
     public function store(IssueRequest $request)

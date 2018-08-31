@@ -14,11 +14,4 @@ class IssueResourceCollection extends ResourceCollection
         }
         return ['data' => [$responseField => IssueResource::collection($this->collection)]];
     }
-
-    public function with($request)
-    {
-        return [
-            'message' => 'success'
-        ];
-    }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HistoryTrait
 {
+    protected $exceptFields = ['created_by', 'updated_by', 'created_at'];
+
     public function transformerHistory($action = 'create', Model $model, $modify = false)
     {
         $historyLog = $this->makeHistoryLog($action, $model, $modify);
@@ -26,9 +28,11 @@ trait HistoryTrait
             $morphDirty = $this->getMorphDirty();
             if (count($modelDirty)) {
                 foreach ($modelDirty as $key => $value) {
-                    $historyLog[$key] = $action === 'create' ?
-                        [$value] :
-                        [$model->getOriginal($key), $value];
+                    if (!$this->isExcept($key)) {
+                        $historyLog[$key] = $action === 'create' ?
+                            [$value] :
+                            [$model->getOriginal($key), $value];
+                    }
                 }
             }
             count($morphDirty) ?
@@ -41,5 +45,10 @@ trait HistoryTrait
                 array_merge($historyLog, $modify) : $historyLog;
             return $historyLog;
         }
+    }
+
+    public function isExcept($column)
+    {
+        return in_array($column, $this->exceptFields);
     }
 }

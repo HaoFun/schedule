@@ -35,9 +35,4 @@ trait TransformerHistoryHandler
             }
         }
     }
-
-    public function makeFormatHistory(History $history)
-    {
-
-    }
 }
